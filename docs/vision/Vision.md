@@ -1,3 +1,4 @@
+#vision
 
 Capsular helps people with capsule wardrobes make fewer clothing-related decisions.
 
@@ -11,3 +12,7 @@ The long-term goal is to become a personal wardrobe operating system that helps 
 - maintain a minimal yet effective wardrobe
 ## Core Principle
 Less decisions. Better style.
+
+[[Mission]] 
+[[Positioning]]
+[[Vision]] 

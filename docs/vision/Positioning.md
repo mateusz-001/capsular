@@ -1,3 +1,4 @@
+#vision 
 ## One Sentence
 Capsular helps minimalists organize, plan and optimize their wardrobe.
 
