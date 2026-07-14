@@ -1,344 +1,161 @@
-```
+# Capsular App Context
 
-# Capsular
+## What This Is
 
-  
+Capsular is a personal wardrobe operating system for minimalists.
+It is a decision-support product for managing a capsule wardrobe, not a fashion app.
 
-## Project Overview
+Core promise: less decisions, better style.
 
-  
+## Target User
 
-### Name
+Primary persona: Mateusz, a 24-year-old software engineer who values practicality, minimalism, and productivity.
 
-  
+He wants to:
 
-Capsular
-
-  
-
-### Category
-
-  
-
-Personal Wardrobe Operating System
-
-  
-
-### Tagline
-
-  
-
-Less decisions. Better style.
-
-  
-
----
-
-  
-
-# Mission
-
-  
-
-Capsular helps users:
-
-  
-
-- make fewer clothing-related decisions
-
-- maximize wardrobe utilization
-
-- plan outfits efficiently
-
-- make conscious purchasing decisions
-
-- maintain a capsule wardrobe
-
-  
-
-Capsular is not a fashion app.
-
-  
-
-Capsular is a decision-support system for managing a personal wardrobe.
-
-  
-
----
-
-  
-
-# Primary Persona
-
-  
-
-## Mateusz
-
-  
-
-Age: 24
-
-  
-
-Occupation: Software Engineer
-
-  
-
-### Characteristics
-
-  
-
-- owns a capsule wardrobe
-
-- values quality over quantity
-
-- prefers practicality over fashion trends
-
-- dislikes repetitive daily decisions
-
-- interested in productivity and minimalism
-
-  
-
-### Goals
-
-  
-
-- know what to wear tomorrow
-
-- avoid wasting time in the morning
-
+- decide what to wear quickly
 - plan outfits ahead of time
-
-- know what clothes are currently available
-
+- see what clothes are available
+- track what is in laundry
 - understand wardrobe usage
-
 - identify wardrobe gaps
+- make more conscious purchases
 
-- make informed purchasing decisions
+## Problems To Solve
 
-  
+Capsular exists to reduce these recurring problems:
 
----
+- I do not know what to wear tomorrow.
+- I do not know which clothes are currently available.
+- I do not know which clothes are being overused.
+- I do not know what is missing in my wardrobe.
+- I do not know whether buying a specific item makes sense.
+- I am not using the full potential of my capsule wardrobe.
 
-  
+## MVP Scope
 
-# User Problems
+The first version focuses on value without AI.
 
-  
+Included:
 
-## Problem 1
+- authentication
+- wardrobe management
+- outfit creation and editing
+- calendar-based outfit planning
+- usage tracking such as times worn and last worn
 
-  
+Explicitly out of scope for the MVP:
 
-I don't know what to wear tomorrow.
+- AI wardrobe advisor
+- weather integration
+- purchase simulator
+- mobile application
 
-  
+## Roadmap Direction
 
-### Potential Solution
+Planned growth is staged:
 
-  
+- V1: wardrobe, outfit builder, calendar, usage tracking
+- V2: clothing statuses, laundry workflow, weather integration
+- V3: wardrobe analytics
+- V4: AI categorization from photos to metadata
+- V5: AI wardrobe advisor and wardrobe gap analysis
+- V6: purchase simulator for projected impact of new purchases
 
-Tomorrow Outfit Planning
+## Product Principles
 
-  
+The product should stay aligned to these principles:
 
----
+- reduce decisions
+- maximize wardrobe utilization
+- support conscious consumerism
+- keep the experience simple, practical, and efficient
 
-  
+## Technical Direction
 
-## Problem 2
+Current architecture decisions:
 
-  
+- monorepo for shared documentation and shared types
+- PostgreSQL because the domain is highly relational
+- Next.js for the frontend and future marketing site
 
-I don't know which clothes are available.
+Preferred stack:
 
-  
+- frontend: Next.js, TypeScript, Tailwind CSS, shadcn/ui, TanStack Query, Zustand, React Hook Form, Zod
+- backend: Node.js, Express, TypeScript, Prisma, PostgreSQL
+- storage: Cloudinary
+- deployment: Vercel for frontend, Railway or Render for backend, Neon PostgreSQL for the database
 
-### Potential Solution
+## Domain Model
 
-  
+The core entities are:
 
-Wardrobe Status System
+- User
+- ClothingItem
+- Outfit
+- OutfitItem
+- CalendarEntry
+- ClothingUsage
 
-  
+## Source Docs
 
----
-
-  
-
-## Problem 3
-
-  
-
-I don't know which clothes are in laundry.
-
-  
-
-### Potential Solution
-
-  
-
-Clothing Availability Tracking
-
-  
-
----
-
-  
-
-## Problem 4
-
-  
-
-I don't know what is missing in my wardrobe.
-
-  
-
-### Potential Solution
-
-  
-
-Wardrobe Insights
-
-  
-
----
-
-  
-
-## Problem 5
-
-  
-
-I don't know if a purchase is worth it.
-
-  
-
-### Potential Solution
-
-  
-
-Purchase Simulator
-
-  
-
----
-
-  
-
-## Problem 6
-
-  
-
-I'm not fully utilizing my wardrobe.
-
-  
-
-### Potential Solution
-
-  
-
-Wardrobe Analytics
-
-  
-
----
-
-  
+- [[Vision]]
+- [[Mission]]
+- [[Positioning]]
+- [[Product]]
+- [[MVP]]
+- [[Roadmap]]
+- [[User Stories]]
+- [[User flows]]
+- [[Architecture]]
+- [[Database]]
+- [[Stack]]
 
 # Product Principles
 
-  
-
 ## Principle 1
-
-  
 
 Reduce Decisions
 
-  
-
 Every feature should reduce cognitive load.
 
-  
-
 ---
-
-  
 
 ## Principle 2
 
-  
-
 Quality Over Quantity
-
-  
 
 Focus on wardrobe optimization, not wardrobe expansion.
 
-  
-
 ---
-
-  
 
 ## Principle 3
 
-  
-
 Simple Beats Smart
-
-  
 
 Simple solutions are preferred over complex ones.
 
-  
-
 ---
-
-  
 
 ## Principle 4
 
-  
-
 AI Is An Assistant
-
-  
 
 AI supports the product but is not the product itself.
 
-  
-
 ---
-
-  
 
 ## Principle 5
 
-  
-
 Every Feature Solves A Real Problem
-
-  
 
 Features must be tied directly to user pain points.
 
-  
-
 ---
-
-  
 
 # Product Vision
 
-  
-
 Capsular should evolve into a complete wardrobe operating system that helps users:
-
-  
 
 - plan
 
@@ -348,27 +165,15 @@ Capsular should evolve into a complete wardrobe operating system that helps user
 
 - optimize
 
-  
-
 their clothing decisions.
-
-  
 
 ---
 
-  
-
 # MVP Scope
-
-  
 
 ## Authentication
 
-  
-
 ### Features
-
-  
 
 - Register
 
@@ -376,19 +181,11 @@ their clothing decisions.
 
 - Logout
 
-  
-
 ---
-
-  
 
 ## Wardrobe
 
-  
-
 ### Features
-
-  
 
 - Add clothing item
 
@@ -398,19 +195,11 @@ their clothing decisions.
 
 - Browse wardrobe
 
-  
-
 ---
-
-  
 
 ## Outfit Builder
 
-  
-
 ### Features
-
-  
 
 - Create outfit
 
@@ -418,55 +207,31 @@ their clothing decisions.
 
 - Delete outfit
 
-  
-
 ---
-
-  
 
 ## Calendar
 
-  
-
 ### Features
-
-  
 
 - Assign outfit to day
 
 - View planned outfits
 
-  
-
 ---
-
-  
 
 ## Usage Tracking
 
-  
-
 ### Features
-
-  
 
 - Times Worn
 
 - Last Worn
 
-  
-
 ---
-
-  
 
 # MVP Exclusions
 
-  
-
 The following are intentionally excluded from MVP:
-
-  
 
 - AI recommendations
 
@@ -480,23 +245,13 @@ The following are intentionally excluded from MVP:
 
 - Marketplace
 
-  
-
 ---
-
-  
 
 # Roadmap
 
-  
-
 ## V1
 
-  
-
 ### Core MVP
-
-  
 
 - Wardrobe
 
@@ -506,19 +261,11 @@ The following are intentionally excluded from MVP:
 
 - Usage Tracking
 
-  
-
 ---
-
-  
 
 ## V2
 
-  
-
 ### Organization
-
-  
 
 - Clothing Statuses
 
@@ -528,19 +275,11 @@ The following are intentionally excluded from MVP:
 
 - Weather Integration
 
-  
-
 ---
-
-  
 
 ## V3
 
-  
-
 ### Analytics
-
-  
 
 - Most Worn Items
 
@@ -550,23 +289,13 @@ The following are intentionally excluded from MVP:
 
 - Cost Per Wear
 
-  
-
 ---
-
-  
 
 ## V4
 
-  
-
 ### AI Categorization
 
-  
-
 Photo analysis:
-
-  
 
 - category
 
@@ -576,55 +305,29 @@ Photo analysis:
 
 - style
 
-  
-
 ---
-
-  
 
 ## V5
 
-  
-
 ### AI Wardrobe Advisor
-
-  
 
 Wardrobe gap analysis.
 
-  
-
 Example:
-
-  
 
 "You own 5 black t-shirts and no light shirts."
 
-  
-
 ---
-
-  
 
 ## V6
 
-  
-
 ### Purchase Simulator
-
-  
 
 Example:
 
-  
-
 White Oxford Shirt
 
-  
-
 Result:
-
-  
 
 - +12 outfit combinations
 
@@ -632,31 +335,17 @@ Result:
 
 - projected cost per outfit
 
-  
-
 ---
-
-  
 
 # Figma Make Review
 
-  
-
 ## Strong Areas
-
-  
 
 ### Wardrobe
 
-  
-
 Rating: 9/10
 
-  
-
 Strengths:
-
-  
 
 - excellent filtering
 
@@ -666,23 +355,13 @@ Strengths:
 
 - intuitive browsing
 
-  
-
 ---
-
-  
 
 ### Calendar
 
-  
-
 Rating: 9/10
 
-  
-
 Strengths:
-
-  
 
 - simple visual planning
 
@@ -690,23 +369,13 @@ Strengths:
 
 - strong UX
 
-  
-
 ---
-
-  
 
 ### Add Item
 
-  
-
 Rating: 9/10
 
-  
-
 Strengths:
-
-  
 
 - clean flow
 
@@ -714,43 +383,23 @@ Strengths:
 
 - simple form structure
 
-  
-
 ---
-
-  
 
 # UX Issues Identified
 
-  
-
 ## Dashboard
-
-  
 
 Current Rating: 7/10
 
-  
-
 ### Problem
-
-  
 
 Tomorrow Outfit card is too image-focused.
 
-  
-
 When outfit photos are missing or insufficient, layout becomes weak.
-
-  
 
 ### Proposed Improvement
 
-  
-
 Display clothing as structured list:
-
-  
 
 - thumbnail
 
@@ -758,39 +407,21 @@ Display clothing as structured list:
 
 - color
 
-  
-
 Example:
-
-  
 
 White Oxford Shirt
 
-  
-
 Color: White
-
-  
 
 Navy Chinos
 
-  
-
 Color: Navy
-
-  
 
 Brown Loafers
 
-  
-
 Color: Brown
 
-  
-
 Add:
-
-  
 
 - Edit Outfit
 
@@ -798,15 +429,9 @@ Add:
 
 - Ready To Wear Status
 
-  
-
 ---
 
-  
-
 ### Missing Features
-
-  
 
 - weather
 
@@ -816,35 +441,19 @@ Add:
 
 - wardrobe insights
 
-  
-
 ---
-
-  
 
 ## Weekly Planner
 
-  
-
 Current Rating: 7/10
-
-  
 
 ### Problem
 
-  
-
 Outfits are difficult to recognize from a single thumbnail.
-
-  
 
 ### Proposed Improvement
 
-  
-
 Display:
-
-  
 
 - outfit name
 
@@ -852,51 +461,27 @@ Display:
 
 - multiple garment thumbnails
 
-  
-
 Example:
-
-  
 
 Business Casual
 
-  
-
 👔 👖 👞
-
-  
 
 ---
 
-  
-
 ## Outfit Builder
-
-  
 
 Current Rating: 5/10
 
-  
-
 ### Problems
-
-  
 
 #### Images Are Too Large
 
-  
-
 Feels more like Pinterest than wardrobe management.
-
-  
 
 #### Missing Metadata
 
-  
-
 Each clothing card should display:
-
-  
 
 - Name
 
@@ -906,93 +491,49 @@ Each clothing card should display:
 
 - Times Worn
 
-  
-
 #### Missing Outfit Structure
-
-  
 
 Current behavior:
 
-  
-
 Select any clothing pieces.
-
-  
 
 Proposed structure:
 
-  
-
 Top ✅
-
-  
 
 Bottom ✅
 
-  
-
 Shoes ❌
-
-  
 
 Outerwear ❌
 
-  
-
 #### Missing Favorites
 
-  
-
 Add:
-
-  
 
 - Favorite Clothes
 
 - Favorite Outfits
 
-  
-
 ---
-
-  
 
 # Next Figma Iteration Goal
 
-  
-
 Transform Capsular from:
-
-  
 
 Wardrobe Gallery
 
-  
-
 into:
-
-  
 
 Wardrobe Decision System
 
-  
-
 ---
-
-  
 
 ## Dashboard Requirements
 
-  
-
 Make Tomorrow's Outfit the primary focus.
 
-  
-
 Include:
-
-  
 
 - weather
 
@@ -1004,23 +545,13 @@ Include:
 
 - wardrobe insights
 
-  
-
 ---
-
-  
 
 ## Weekly Planner Requirements
 
-  
-
 Improve outfit recognition.
 
-  
-
 Display:
-
-  
 
 - outfit labels
 
@@ -1028,19 +559,11 @@ Display:
 
 - multiple thumbnails
 
-  
-
 ---
-
-  
 
 ## Outfit Builder Requirements
 
-  
-
 Use predefined outfit slots:
-
-  
 
 - Top
 
@@ -1050,11 +573,7 @@ Use predefined outfit slots:
 
 - Outerwear
 
-  
-
 Display:
-
-  
 
 - favorites
 
@@ -1064,23 +583,13 @@ Display:
 
 - usage information
 
-  
-
 Reduce image dominance.
-
-  
 
 ---
 
-  
-
 # Technology Stack
 
-  
-
 ## Frontend
-
-  
 
 - Next.js
 
@@ -1098,11 +607,7 @@ Reduce image dominance.
 
 - Zod
 
-  
-
 ### Planned Next.js Features
-
-  
 
 - App Router
 
@@ -1118,31 +623,17 @@ Reduce image dominance.
 
 - Partial Prerendering
 
-  
-
 ### Explicitly Avoiding
-
-  
 
 - Server Actions
 
-  
-
 Reason:
-
-  
 
 Business logic will live inside Express API.
 
-  
-
 ---
 
-  
-
 ## Backend
-
-  
 
 - Node.js
 
@@ -1154,103 +645,57 @@ Business logic will live inside Express API.
 
 - Zod
 
-  
-
 ---
-
-  
 
 ## Database
 
-  
-
 - PostgreSQL
-
-  
 
 ---
 
-  
-
 ## Authentication
 
-  
-
 ### MVP
-
-  
 
 - Email
 
 - Password
 
-  
-
 ### Future
-
-  
 
 - Google OAuth
 
-  
-
 ---
-
-  
 
 ## Storage
 
-  
-
 ### MVP
-
-  
 
 - Cloudinary
 
-  
-
 ### Future
-
-  
 
 - AWS S3
 
-  
-
 ---
-
-  
 
 ## AI
 
-  
-
 ### Future
-
-  
 
 - OpenAI API
 
-  
-
 ---
-
-  
 
 # Repository Structure
 
-  
-
 Monorepo
-
-  
 
 ```txt
 
 Capsular/
 
-  
+
 
 docs/
 
@@ -1262,31 +707,17 @@ marketing-website/
 
 ```
 
-  
-
 ---
-
-  
 
 # Marketing Website
 
-  
-
 Separate project.
-
-  
 
 Future CMS:
 
-  
-
 - Storyblok
 
-  
-
 Purpose:
-
-  
 
 - marketing
 
@@ -1296,29 +727,19 @@ Purpose:
 
 - product positioning
 
-  
-
 ---
-
-  
 
 # Documentation
 
-  
-
 Stored in Obsidian.
 
-  
-
 Structure:
-
-  
 
 ```txt
 
 docs/
 
-  
+
 
 vision/
 
@@ -1334,83 +755,43 @@ wireframes/
 
 ```
 
-  
-
 ---
-
-  
 
 # Current Project Status
 
-  
-
 ## Completed
-
-  
 
 ✅ Product Idea
 
-  
-
 ✅ Name
-
-  
 
 ✅ Vision
 
-  
-
 ✅ Mission
-
-  
 
 ✅ Persona
 
-  
-
 ✅ Problem Definition
-
-  
 
 ✅ MVP Scope
 
-  
-
 ✅ Roadmap
-
-  
 
 ✅ Stack Selection
 
-  
-
 ✅ Repository Setup
-
-  
 
 ✅ GitHub Setup
 
-  
-
 ✅ SSH Configuration
-
-  
 
 ✅ Obsidian Setup
 
-  
-
 ✅ Figma Make v1
-
-  
 
 ---
 
-  
-
 # Next Steps
-
-  
 
 1. Figma Make v2
 
@@ -1426,23 +807,13 @@ wireframes/
 
 7. Development
 
-  
-
 ---
-
-  
 
 # Current Assessment
 
-  
-
 Capsular is no longer just an idea.
 
-  
-
 It already has:
-
-  
 
 - vision
 
@@ -1460,8 +831,4 @@ It already has:
 
 - first mockups
 
-  
-
 The project is currently in the transition phase between Product Discovery and Product Design.
-
-```
