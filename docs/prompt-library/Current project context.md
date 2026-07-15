@@ -108,7 +108,7 @@ The core entities are:
 - [[User Stories]]
 - [[User flows]]
 - [[Architecture]]
-- [[Database]]
+- [[Database Model]]
 - [[Stack]]
 
 # Product Principles
