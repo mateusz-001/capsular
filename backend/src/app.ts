@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 
 import healthRouter from './routes/health.routes.js';
+import authRouter from './routes/auth.routes.js';
 
 import errorMiddleware from './middlewares/error.middleware.js';
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 app.use('/api/health', healthRouter);
+app.use('/api/auth', authRouter);
 
 app.use(errorMiddleware);
 
