@@ -1,27 +1,21 @@
 import express from 'express';
-import { prisma } from './lib/prisma.js';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+
+import healthRouter from './routes/health.routes.js';
+
+import errorMiddleware from './middlewares/error.middleware.js';
 
 const app = express();
 
-app.get('/health', async (_req, res) => {
-  try {
-    await prisma.$queryRaw`SELECT 1`;
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
+app.use(morgan('dev'));
 
-    res.json({
-      status: 'ok',
-      service: 'capsular-backend',
-      database: 'connected',
-      users: await prisma.user.count(),
-    });
-  } catch (error) {
-    console.error('Error in /health route:', error);
+app.use('/api/health', healthRouter);
 
-    res.status(500).json({
-      status: 'error',
-      message: 'Internal Server Error',
-      database: 'disconnected',
-    });
-  }
-});
+app.use(errorMiddleware);
 
 export default app;
