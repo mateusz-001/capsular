@@ -10,7 +10,7 @@ const errorMiddleware = (
 
   res.status(500).json({
     status: 'error',
-    message: 'Internal Server Error',
+    message: err.message,
   });
 };
 
