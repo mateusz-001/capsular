@@ -1,6 +1,19 @@
 import 'dotenv/config';
+import { z } from 'zod';
 
-export const env = {
-  PORT: process.env.PORT ?? 5000,
-  DATABASE_URL: process.env.DATABASE_URL ?? '',
-};
+const envSchema = z.object({
+  PORT: z.string().transform((val) => parseInt(val, 10)),
+  DATABASE_URL: z.string(),
+});
+
+const parsedEnv = envSchema.safeParse(process.env);
+
+if (!parsedEnv.success) {
+  console.error(
+    'Invalid environment variables:',
+    parsedEnv.error.flatten().fieldErrors,
+  );
+  process.exit(1);
+}
+
+export const env = parsedEnv;
