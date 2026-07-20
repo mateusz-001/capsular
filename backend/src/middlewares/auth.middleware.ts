@@ -19,7 +19,6 @@ export const authMiddleware = (
     }
 
     const token = authHeader?.replace('Bearer ', '');
-
     const payload = jwt.verify(token, env.data.JWT_SECRET) as JwtPayload;
 
     req.user = payload;
