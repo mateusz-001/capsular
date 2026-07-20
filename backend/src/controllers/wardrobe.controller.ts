@@ -1,6 +1,16 @@
 import type { Request, Response } from 'express';
-import { create, getAll, getById } from '../services/wardrobe.service.js';
-import { createWardrobeItemSchema } from '../schemas/wardrobe.schema.js';
+import {
+  create,
+  getAll,
+  getById,
+  remove,
+  update,
+} from '../services/wardrobe.service.js';
+import {
+  createWardrobeItemSchema,
+  updateWardrobeItemSchema,
+} from '../schemas/wardrobe.schema.js';
+import { itemIdSchema } from '../schemas/universal.schema.js';
 
 export const createWardrobeItem = async (
   req: Request,
@@ -9,13 +19,11 @@ export const createWardrobeItem = async (
   const { userId } = req.user;
   const data = createWardrobeItemSchema.parse(req.body);
 
-  console.log('Creating wardrobe item with data:', data);
-
-  await create({ userId, data });
+  const wardrobeItem = await create({ userId, data });
 
   res.status(201).json({
     message: 'Wardrobe item created successfully',
-    data,
+    data: wardrobeItem,
   });
 };
 
@@ -25,22 +33,13 @@ export const getAllWardrobeItems = async (
 ): Promise<void> => {
   const { userId } = req.user;
   const wardrobeItems = await getAll(userId);
-  console.log('Retrieved wardrobe items:', wardrobeItems);
 
-  res.status(201).json({ data: wardrobeItems });
+  res.status(200).json({ data: wardrobeItems });
 };
 
 export const getSingleWardrobeItem = async (req: Request, res: Response) => {
   const { userId } = req.user;
-  const { itemId } = req.params;
-
-  if (!itemId) {
-    return res.status(400).json({ message: 'Item ID is required' });
-  }
-
-  if (typeof itemId !== 'string') {
-    return res.status(400).json({ message: 'Invalid item ID' });
-  }
+  const itemId = itemIdSchema.parse(req.params.itemId);
 
   const wardrobeItem = await getById(userId, itemId);
 
@@ -49,4 +48,36 @@ export const getSingleWardrobeItem = async (req: Request, res: Response) => {
   }
 
   res.status(200).json({ data: wardrobeItem });
+};
+
+export const updateWardrobeItem = async (req: Request, res: Response) => {
+  const { userId } = req.user;
+  const itemId = itemIdSchema.parse(req.params.itemId);
+  const data = updateWardrobeItemSchema.parse(req.body);
+
+  const updatedWardrobeItem = await update(userId, itemId, data);
+
+  if (updatedWardrobeItem.count === 0) {
+    return res.status(404).json({ message: 'Wardrobe item not found' });
+  }
+
+  res
+    .status(200)
+    .json({
+      message: 'Wardrobe item updated successfully',
+      data: updatedWardrobeItem,
+    });
+};
+
+export const deleteWardrobeItem = async (req: Request, res: Response) => {
+  const { userId } = req.user;
+  const itemId = itemIdSchema.parse(req.params.itemId);
+
+  const deletedWardrobeItem = await remove(userId, itemId);
+
+  if (deletedWardrobeItem.count === 0) {
+    return res.status(404).json({ message: 'Wardrobe item not found' });
+  }
+
+  res.status(200).json({ message: 'Wardrobe item deleted successfully' });
 };

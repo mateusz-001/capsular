@@ -12,4 +12,7 @@ export const createWardrobeItemSchema = z.object({
   brand: z.string().max(100).optional(),
 });
 
+export const updateWardrobeItemSchema = createWardrobeItemSchema.partial();
+
 export type CreateWardrobeItemInput = z.infer<typeof createWardrobeItemSchema>;
+export type UpdateWardrobeItemInput = z.infer<typeof updateWardrobeItemSchema>;
