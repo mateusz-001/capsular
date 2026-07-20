@@ -9,12 +9,14 @@ import authRouter from './routes/auth.routes.js';
 import wardrobeRouter from './routes/wardrobe.route.js';
 
 import errorMiddleware from './middlewares/error.middleware.js';
+import requestLoggerMiddleware from './middlewares/requestLogger.middleware.js';
 
 const app = express();
 
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
+app.use(requestLoggerMiddleware);
 app.use(morgan('dev'));
 
 app.use('/api/health', healthRouter);

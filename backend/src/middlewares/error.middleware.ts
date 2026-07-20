@@ -1,16 +1,22 @@
 import type { Request, Response, NextFunction } from 'express';
+import { AppError } from '../errors/AppError.js';
 
 const errorMiddleware = (
-  err: Error,
+  error: Error,
   _req: Request,
   res: Response,
   _next: NextFunction,
 ) => {
-  console.error('Error:', err);
+  if (error instanceof AppError) {
+    return res.status(error.statusCode).json({
+      status: 'error',
+      message: error.message,
+    });
+  }
 
   res.status(500).json({
     status: 'error',
-    message: err.message,
+    message: error.message,
   });
 };
 

@@ -1,10 +1,12 @@
 import { Router } from 'express';
 import { prisma } from '../lib/prisma.js';
+import { asyncHandler } from '../utils/asyncHandler.js';
 
 const router = Router();
 
-export default router.get('/', async (_req, res) => {
-  try {
+export default router.get(
+  '/',
+  asyncHandler(async (_req, res) => {
     await prisma.$queryRaw`SELECT 1`;
 
     res.json({
@@ -13,13 +15,5 @@ export default router.get('/', async (_req, res) => {
       database: 'connected',
       users: await prisma.user.count(),
     });
-  } catch (error) {
-    console.error('Error in /api/health route:', error);
-
-    res.status(500).json({
-      status: 'error',
-      message: 'Internal Server Error',
-      database: 'disconnected',
-    });
-  }
-});
+  }),
+);
