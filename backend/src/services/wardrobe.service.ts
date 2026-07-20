@@ -18,3 +18,18 @@ export const create = async ({ userId, data }: CreateWardrobeItemPayload) => {
     },
   });
 };
+
+export const getAll = async (userId: string) => {
+  return prisma.wardrobeItem.findMany({
+    where: { userId },
+  });
+};
+
+export const getById = async (userId: string, itemId: string) => {
+  return prisma.wardrobeItem.findFirst({
+    where: {
+      userId,
+      id: itemId,
+    },
+  });
+};
