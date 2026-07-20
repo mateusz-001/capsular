@@ -7,6 +7,7 @@ import {
   update,
 } from '../services/wardrobe.service.js';
 import { itemIdSchema } from '../schemas/universal.schema.js';
+import { wardrobeQuerySchema } from '../schemas/wardrobe.schema.js';
 
 export const createWardrobeItem = async (
   req: Request,
@@ -27,10 +28,19 @@ export const getAllWardrobeItems = async (
   res: Response,
 ): Promise<void> => {
   const { userId } = req.user;
+  const query = wardrobeQuerySchema.parse(req.query);
 
-  const wardrobeItems = await getAll(userId);
+  const wardrobeItems = await getAll(userId, query);
 
-  res.status(200).json({ data: wardrobeItems });
+  res.status(200).json({
+    data: wardrobeItems,
+    pagination: {
+      page: query.page,
+      limit: query.limit,
+      total: wardrobeItems.total,
+      totalPages: Math.ceil(wardrobeItems.total / query.limit),
+    },
+  });
 };
 
 export const getSingleWardrobeItem = async (req: Request, res: Response) => {

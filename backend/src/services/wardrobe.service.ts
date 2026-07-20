@@ -2,6 +2,7 @@ import { prisma } from '../lib/prisma.js';
 import type {
   CreateWardrobeItemInput,
   UpdateWardrobeItemInput,
+  WardrobeQuery,
 } from '../schemas/wardrobe.schema.js';
 
 interface CreateWardrobeItemPayload {
@@ -22,10 +23,45 @@ export const create = async ({ userId, data }: CreateWardrobeItemPayload) => {
   });
 };
 
-export const getAll = async (userId: string) => {
-  return prisma.wardrobeItem.findMany({
-    where: { userId, archivedAt: null },
-  });
+export const getAll = async (userId: string, query: WardrobeQuery) => {
+  const where = {
+    userId,
+    archivedAt: null,
+
+    ...(query.category && {
+      category: query.category,
+    }),
+
+    ...(query.brand && {
+      brand: query.brand,
+    }),
+
+    ...(query.search && {
+      name: {
+        contains: query.search,
+        mode: 'insensitive' as const,
+      },
+    }),
+  };
+
+  const orderBy = {
+    [query.sortBy]: query.order,
+  };
+
+  const skip = (query.page - 1) * query.limit;
+  const take = query.limit;
+
+  const [items, total] = await prisma.$transaction([
+    prisma.wardrobeItem.findMany({
+      where,
+      orderBy,
+      skip,
+      take,
+    }),
+    prisma.wardrobeItem.count({ where }),
+  ]);
+
+  return { items, total };
 };
 
 export const getById = async (userId: string, itemId: string) => {
