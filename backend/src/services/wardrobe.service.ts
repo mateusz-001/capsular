@@ -1,9 +1,11 @@
+import { NotFoundError } from '../errors/NotFoundError.js';
 import { prisma } from '../lib/prisma.js';
 import type {
   CreateWardrobeItemInput,
   UpdateWardrobeItemInput,
   WardrobeQuery,
 } from '../schemas/wardrobe.schema.js';
+import { removeUndefinedValuesFromPayload } from '../utils/removeUndefinedValuesFromPayload.js';
 
 interface CreateWardrobeItemPayload {
   userId: string;
@@ -11,15 +13,16 @@ interface CreateWardrobeItemPayload {
 }
 
 export const create = async ({ userId, data }: CreateWardrobeItemPayload) => {
+  const payload = removeUndefinedValuesFromPayload({
+    userId,
+    ...data,
+    description: data.description ?? null,
+    size: data.size ?? null,
+    brand: data.brand ?? null,
+  });
+
   return prisma.wardrobeItem.create({
-    data: {
-      userId,
-      name: data.name,
-      category: data.category,
-      description: data.description ?? null,
-      size: data.size ?? null,
-      brand: data.brand ?? null,
-    },
+    data: payload as Parameters<typeof prisma.wardrobeItem.create>[0]['data'],
   });
 };
 
@@ -65,13 +68,19 @@ export const getAll = async (userId: string, query: WardrobeQuery) => {
 };
 
 export const getById = async (userId: string, itemId: string) => {
-  return prisma.wardrobeItem.findFirst({
+  const item = await prisma.wardrobeItem.findFirst({
     where: {
       userId,
       id: itemId,
       archivedAt: null,
     },
   });
+
+  if (!item) {
+    throw new NotFoundError('Wardrobe item not found');
+  }
+
+  return item;
 };
 
 export const update = async (
@@ -79,27 +88,27 @@ export const update = async (
   itemId: string,
   data: Partial<UpdateWardrobeItemInput>,
 ) => {
-  const updateData = {
-    ...(data.name !== undefined ? { name: data.name } : {}),
-    ...(data.category !== undefined ? { category: data.category } : {}),
-    ...(data.description !== undefined
-      ? { description: data.description }
-      : {}),
-    ...(data.size !== undefined ? { size: data.size } : {}),
-    ...(data.brand !== undefined ? { brand: data.brand } : {}),
-  };
+  const updateData = removeUndefinedValuesFromPayload(data);
 
-  return prisma.wardrobeItem.updateMany({
+  const result = await prisma.wardrobeItem.updateMany({
     where: {
       userId,
       id: itemId,
     },
-    data: updateData,
+    data: updateData as Parameters<
+      typeof prisma.wardrobeItem.updateMany
+    >[0]['data'],
   });
+
+  if (result.count === 0) {
+    throw new NotFoundError('Wardrobe item not found');
+  }
+
+  return result;
 };
 
 export const remove = async (userId: string, itemId: string) => {
-  return prisma.wardrobeItem.updateMany({
+  const result = await prisma.wardrobeItem.updateMany({
     where: {
       userId,
       id: itemId,
@@ -108,4 +117,10 @@ export const remove = async (userId: string, itemId: string) => {
       archivedAt: new Date(),
     },
   });
+
+  if (result.count === 0) {
+    throw new NotFoundError('Wardrobe item not found');
+  }
+
+  return result;
 };
