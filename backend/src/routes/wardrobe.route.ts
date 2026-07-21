@@ -6,6 +6,8 @@ import {
   getSingleWardrobeItem,
   updateWardrobeItem,
   uploadWardrobeImage,
+  deleteWardrobeImage,
+  replaceWardrobeImage,
 } from '../controllers/wardrobe.controller.js';
 import { authMiddleware } from '../middlewares/auth.middleware.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
@@ -41,6 +43,17 @@ router.post(
   authMiddleware,
   uploadMiddleware.single('image'),
   asyncHandler(uploadWardrobeImage),
+);
+router.delete(
+  '/:itemId/image/:imageId',
+  authMiddleware,
+  asyncHandler(deleteWardrobeImage),
+);
+router.put(
+  '/:itemId/image/:imageId',
+  authMiddleware,
+  uploadMiddleware.single('image'),
+  asyncHandler(replaceWardrobeImage),
 );
 
 export default router;

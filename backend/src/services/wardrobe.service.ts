@@ -6,6 +6,7 @@ import type {
   WardrobeQuery,
 } from '../schemas/wardrobe.schema.js';
 import { removeUndefinedValuesFromPayload } from '../utils/removeUndefinedValuesFromPayload.js';
+import { deleteImage } from './image.service.js';
 
 interface CreateWardrobeItemPayload {
   userId: string;
@@ -119,6 +120,29 @@ export const update = async (
 };
 
 export const remove = async (userId: string, itemId: string) => {
+  const wardrobeItem = await prisma.wardrobeItem.findFirst({
+    where: {
+      userId,
+      id: itemId,
+      archivedAt: null,
+    },
+    include: {
+      images: true,
+    },
+  });
+
+  if (!wardrobeItem) {
+    throw new NotFoundError('Wardrobe item not found');
+  }
+
+  for (const image of wardrobeItem.images) {
+    await deleteImage({
+      itemId,
+      userId,
+      imageId: image.id,
+    });
+  }
+
   const result = await prisma.wardrobeItem.updateMany({
     where: {
       userId,
@@ -128,10 +152,6 @@ export const remove = async (userId: string, itemId: string) => {
       archivedAt: new Date(),
     },
   });
-
-  if (result.count === 0) {
-    throw new NotFoundError('Wardrobe item not found');
-  }
 
   return result;
 };

@@ -68,3 +68,37 @@ export const uploadImage = async ({
 
   return image;
 };
+
+export const deleteImage = async ({
+  itemId,
+  userId,
+  imageId,
+}: {
+  itemId: string;
+  userId: string;
+  imageId: string;
+}): Promise<WardrobeItemImage> => {
+  const wardrobeItem = await prisma.wardrobeItem.findFirst({
+    where: { userId, id: itemId, archivedAt: null },
+  });
+
+  if (!wardrobeItem) {
+    throw new NotFoundError('Wardrobe item not found');
+  }
+
+  const image = await prisma.wardrobeItemImage.findFirst({
+    where: { wardrobeItemId: itemId, id: imageId },
+  });
+
+  if (!image) {
+    throw new NotFoundError('Image not found');
+  }
+
+  await cloudinary.uploader.destroy(image.cloudinaryPublicId);
+
+  const deletedImage = await prisma.wardrobeItemImage.delete({
+    where: { id: imageId },
+  });
+
+  return deletedImage;
+};

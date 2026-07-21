@@ -8,8 +8,9 @@ import {
 } from '../services/wardrobe.service.js';
 import { itemIdSchema } from '../schemas/universal.schema.js';
 import { wardrobeQuerySchema } from '../schemas/wardrobe.schema.js';
-import { uploadImage } from '../services/image.service.js';
+import { deleteImage, uploadImage } from '../services/image.service.js';
 import { BadRequestError } from '../errors/BadRequestError.js';
+import { NotFoundError } from '../errors/NotFoundError.js';
 
 export const createWardrobeItem = async (
   req: Request,
@@ -71,7 +72,11 @@ export const deleteWardrobeItem = async (req: Request, res: Response) => {
   const { userId } = req.user;
   const itemId = itemIdSchema.parse(req.params.itemId);
 
-  await remove(userId, itemId);
+  const result = await remove(userId, itemId);
+
+  if (result.count === 0) {
+    throw new NotFoundError('Wardrobe item not found');
+  }
 
   res.sendStatus(204);
 };
@@ -94,5 +99,53 @@ export const uploadWardrobeImage = async (req: Request, res: Response) => {
   res.status(200).json({
     message: 'Image uploaded successfully',
     data: image,
+  });
+};
+
+export const deleteWardrobeImage = async (req: Request, res: Response) => {
+  const { userId } = req.user;
+  const itemId = itemIdSchema.parse(req.params.itemId);
+  const imageId = itemIdSchema.parse(req.params.imageId);
+
+  const image = await deleteImage({
+    itemId,
+    userId,
+    imageId,
+  });
+
+  res.status(200).json({
+    message: 'Image deleted successfully',
+    data: image,
+  });
+};
+
+export const replaceWardrobeImage = async (req: Request, res: Response) => {
+  const { userId } = req.user;
+  const itemId = itemIdSchema.parse(req.params.itemId);
+  const imageId = itemIdSchema.parse(req.params.imageId);
+  const file = req.file;
+
+  if (!file) {
+    throw new BadRequestError('Image file is required');
+  }
+
+  const deletedImage = await deleteImage({
+    itemId,
+    userId,
+    imageId,
+  });
+
+  const uploadedImage = await uploadImage({
+    itemId,
+    userId,
+    file,
+  });
+
+  res.status(200).json({
+    message: 'Image replaced successfully',
+    data: {
+      deletedImage,
+      uploadedImage,
+    },
   });
 };
