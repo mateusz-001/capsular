@@ -57,6 +57,13 @@ export const getAll = async (userId: string, query: WardrobeQuery) => {
       orderBy,
       skip,
       take,
+      include: {
+        images: {
+          orderBy: {
+            position: 'asc',
+          },
+        },
+      },
     }),
     prisma.wardrobeItem.count({ where }),
   ]);
@@ -70,6 +77,13 @@ export const getById = async (userId: string, itemId: string) => {
       userId,
       id: itemId,
       archivedAt: null,
+    },
+    include: {
+      images: {
+        orderBy: {
+          position: 'asc',
+        },
+      },
     },
   });
 

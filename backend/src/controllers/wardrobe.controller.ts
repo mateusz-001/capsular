@@ -8,6 +8,8 @@ import {
 } from '../services/wardrobe.service.js';
 import { itemIdSchema } from '../schemas/universal.schema.js';
 import { wardrobeQuerySchema } from '../schemas/wardrobe.schema.js';
+import { uploadImage } from '../services/image.service.js';
+import { BadRequestError } from '../errors/BadRequestError.js';
 
 export const createWardrobeItem = async (
   req: Request,
@@ -72,4 +74,25 @@ export const deleteWardrobeItem = async (req: Request, res: Response) => {
   await remove(userId, itemId);
 
   res.sendStatus(204);
+};
+
+export const uploadWardrobeImage = async (req: Request, res: Response) => {
+  const { userId } = req.user;
+  const itemId = itemIdSchema.parse(req.params.itemId);
+  const file = req.file;
+
+  if (!file) {
+    throw new BadRequestError('Image file is required');
+  }
+
+  const image = await uploadImage({
+    itemId,
+    userId,
+    file,
+  });
+
+  res.status(200).json({
+    message: 'Image uploaded successfully',
+    data: image,
+  });
 };
