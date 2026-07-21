@@ -3,6 +3,8 @@ import {
   create,
   getAll,
   getById,
+  getColors,
+  getMaterials,
   remove,
   update,
 } from '../services/wardrobe.service.js';
@@ -148,4 +150,18 @@ export const replaceWardrobeImage = async (req: Request, res: Response) => {
       uploadedImage,
     },
   });
+};
+
+export const getAvailableColors = async (_req: Request, res: Response) => {
+  console.log('COLORS ENDPOINT HIT');
+
+  const colors = await getColors();
+
+  res.status(200).json({ data: colors });
+};
+
+export const getAvailableMaterials = async (_req: Request, res: Response) => {
+  const materials = await getMaterials();
+
+  res.status(200).json({ data: materials });
 };
