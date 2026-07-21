@@ -9,7 +9,7 @@ import {
 import { authMiddleware } from '../middlewares/auth.middleware.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import {
-  createWardrobeItemSchema,
+  wardrobeItemSchema,
   updateWardrobeItemSchema,
 } from '../schemas/wardrobe.schema.js';
 import { validate } from '../utils/validate.js';
@@ -28,7 +28,7 @@ router.patch(
 router.post(
   '/',
   authMiddleware,
-  validate(createWardrobeItemSchema),
+  validate(wardrobeItemSchema),
   asyncHandler(createWardrobeItem),
 );
 

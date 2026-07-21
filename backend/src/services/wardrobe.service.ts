@@ -16,9 +16,6 @@ export const create = async ({ userId, data }: CreateWardrobeItemPayload) => {
   const payload = removeUndefinedValuesFromPayload({
     userId,
     ...data,
-    description: data.description ?? null,
-    size: data.size ?? null,
-    brand: data.brand ?? null,
   });
 
   return prisma.wardrobeItem.create({
