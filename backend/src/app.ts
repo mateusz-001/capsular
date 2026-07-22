@@ -1,0 +1,31 @@
+import express from 'express';
+import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+
+import healthRouter from './routes/health.routes.js';
+import authRouter from './routes/auth.routes.js';
+
+import wardrobeRouter from './routes/wardrobe.route.js';
+import universalRouter from './routes/universal.routes.js';
+
+import errorMiddleware from './middlewares/error.middleware.js';
+import requestLoggerMiddleware from './middlewares/requestLogger.middleware.js';
+
+const app = express();
+
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
+app.use(requestLoggerMiddleware);
+app.use(morgan('dev'));
+
+app.use('/api/health', healthRouter);
+app.use('/api/auth', authRouter);
+
+app.use('/api/wardrobe', wardrobeRouter);
+app.use('/api/universal', universalRouter);
+
+app.use(errorMiddleware);
+
+export default app;
