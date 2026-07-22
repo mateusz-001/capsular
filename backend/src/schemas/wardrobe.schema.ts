@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import {
   AvailabilityStatus,
+  ColorRole,
   Occasion,
   Season,
   WardrobeCategory,
@@ -68,8 +69,20 @@ export const wardrobeItemSchema = z.object({
   lastWornBeforeTracking: z.coerce.date().optional(),
 });
 
+export const addColorSchema = z.object({
+  colorId: z.string().uuid('Color ID must be a valid UUID'),
+  role: z.enum(ColorRole).default(ColorRole.PRIMARY),
+});
+
+export const addMaterialSchema = z.object({
+  materialId: z.string().uuid('Material ID must be a valid UUID'),
+  percentage: z.number().max(100).optional(),
+});
+
 export const updateWardrobeItemSchema = wardrobeItemSchema.partial();
 
 export type WardrobeQuery = z.infer<typeof wardrobeQuerySchema>;
 export type CreateWardrobeItemInput = z.infer<typeof wardrobeItemSchema>;
 export type UpdateWardrobeItemInput = z.infer<typeof updateWardrobeItemSchema>;
+export type AddWardrobeItemColorInput = z.infer<typeof addColorSchema>;
+export type AddWardrobeItemMaterialInput = z.infer<typeof addMaterialSchema>;

@@ -1,10 +1,15 @@
 import type { Request, Response } from 'express';
 import {
+  addColor,
+  addMaterial,
   create,
+  deleteColor,
+  deleteMaterial,
   getAll,
   getById,
   remove,
   update,
+  updateMaterial,
 } from '../services/wardrobe.service.js';
 import { itemIdSchema } from '../schemas/universal.schema.js';
 import { wardrobeQuerySchema } from '../schemas/wardrobe.schema.js';
@@ -107,16 +112,13 @@ export const deleteWardrobeImage = async (req: Request, res: Response) => {
   const itemId = itemIdSchema.parse(req.params.itemId);
   const imageId = itemIdSchema.parse(req.params.imageId);
 
-  const image = await deleteImage({
+  await deleteImage({
     itemId,
     userId,
     imageId,
   });
 
-  res.status(200).json({
-    message: 'Image deleted successfully',
-    data: image,
-  });
+  res.sendStatus(204);
 };
 
 export const replaceWardrobeImage = async (req: Request, res: Response) => {
@@ -129,7 +131,7 @@ export const replaceWardrobeImage = async (req: Request, res: Response) => {
     throw new BadRequestError('Image file is required');
   }
 
-  const deletedImage = await deleteImage({
+  await deleteImage({
     itemId,
     userId,
     imageId,
@@ -144,8 +146,83 @@ export const replaceWardrobeImage = async (req: Request, res: Response) => {
   res.status(200).json({
     message: 'Image replaced successfully',
     data: {
-      deletedImage,
       uploadedImage,
     },
   });
+};
+
+export const addWardrobeItemColor = async (req: Request, res: Response) => {
+  const { userId } = req.user;
+  const itemId = itemIdSchema.parse(req.params.itemId);
+
+  const addedColor = await addColor({
+    userId,
+    itemId,
+    data: req.body,
+  });
+
+  res.status(200).json({
+    message: 'Color added to wardrobe item successfully',
+    data: addedColor,
+  });
+};
+
+export const removeWardrobeItemColor = async (req: Request, res: Response) => {
+  const { userId } = req.user;
+  const itemId = itemIdSchema.parse(req.params.itemId);
+  const colorId = itemIdSchema.parse(req.params.colorId);
+
+  await deleteColor(userId, itemId, colorId);
+
+  res.sendStatus(204);
+};
+
+export const addWardrobeItemMaterial = async (req: Request, res: Response) => {
+  const { userId } = req.user;
+  const itemId = itemIdSchema.parse(req.params.itemId);
+
+  const addedMaterial = await addMaterial({
+    userId,
+    itemId,
+    data: req.body,
+  });
+
+  res.status(200).json({
+    message: 'Material added to wardrobe item successfully',
+    data: addedMaterial,
+  });
+};
+
+export const updateWardrobeItemMaterial = async (
+  req: Request,
+  res: Response,
+) => {
+  const { userId } = req.user;
+  const itemId = itemIdSchema.parse(req.params.itemId);
+  const materialId = itemIdSchema.parse(req.params.materialId);
+
+  const updatedMaterial = await updateMaterial(
+    userId,
+    itemId,
+    materialId,
+    req.body,
+  );
+
+  res.status(200).json({
+    message: 'Material updated successfully',
+    data: updatedMaterial,
+  });
+};
+
+export const removeWardrobeItemMaterial = async (
+  req: Request,
+  res: Response,
+) => {
+  const { userId } = req.user;
+  const itemId = itemIdSchema.parse(req.params.itemId);
+  const materialId = itemIdSchema.parse(req.params.materialId);
+
+  await deleteMaterial(userId, itemId, materialId);
+
+  res.sendStatus(204);
 };
