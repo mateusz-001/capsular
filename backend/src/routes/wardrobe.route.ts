@@ -8,8 +8,6 @@ import {
   uploadWardrobeImage,
   deleteWardrobeImage,
   replaceWardrobeImage,
-  getAvailableMaterials,
-  getAvailableColors,
 } from '../controllers/wardrobe.controller.js';
 import { authMiddleware } from '../middlewares/auth.middleware.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
@@ -23,9 +21,6 @@ import uploadMiddleware from '../middlewares/upload.middleware.js';
 const router = Router();
 
 router.get('/', authMiddleware, asyncHandler(getAllWardrobeItems));
-
-router.get('/colors', authMiddleware, asyncHandler(getAvailableColors));
-router.get('/materials', authMiddleware, asyncHandler(getAvailableMaterials));
 
 router.get('/:itemId', authMiddleware, asyncHandler(getSingleWardrobeItem));
 router.delete('/:itemId', authMiddleware, asyncHandler(deleteWardrobeItem));

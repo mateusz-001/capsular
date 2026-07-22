@@ -7,6 +7,7 @@ import healthRouter from './routes/health.routes.js';
 import authRouter from './routes/auth.routes.js';
 
 import wardrobeRouter from './routes/wardrobe.route.js';
+import universalRouter from './routes/universal.routes.js';
 
 import errorMiddleware from './middlewares/error.middleware.js';
 import requestLoggerMiddleware from './middlewares/requestLogger.middleware.js';
@@ -23,6 +24,7 @@ app.use('/api/health', healthRouter);
 app.use('/api/auth', authRouter);
 
 app.use('/api/wardrobe', wardrobeRouter);
+app.use('/api/universal', universalRouter);
 
 app.use(errorMiddleware);
 
