@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { env } from '../config/env.js';
 
 import type { LoginInput, RegisterInput } from '../schemas/auth.schema.js';
+import { NotFoundError } from '../errors/NotFoundError.js';
 
 export const registerUser = async ({ email, password }: RegisterInput) => {
   const existingUser = await prisma.user.findUnique({
@@ -62,7 +63,7 @@ export const getCurrentUser = async (userId: string) => {
   const user = await prisma.user.findUnique({ where: { id: userId } });
 
   if (!user) {
-    throw new Error('User not found');
+    throw new NotFoundError('User not found');
   }
 
   return {

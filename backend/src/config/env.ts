@@ -5,6 +5,9 @@ const envSchema = z.object({
   PORT: z.string().transform((val) => parseInt(val, 10)),
   DATABASE_URL: z.string(),
   JWT_SECRET: z.string(),
+  CLOUDINARY_CLOUD_NAME: z.string(),
+  CLOUDINARY_API_KEY: z.string(),
+  CLOUDINARY_API_SECRET: z.string(),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);
