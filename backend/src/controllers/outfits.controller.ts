@@ -73,9 +73,8 @@ export const deleteOutfit = async (req: Request, res: Response) => {
 export const deleteOutfitItem = async (req: Request, res: Response) => {
   const { userId } = req.user;
   const outfitId = itemIdSchema.parse(req.params.outfitId);
-  const itemId = itemIdSchema.parse(req.params.itemId);
 
-  await removeItem(userId, outfitId, itemId);
+  await removeItem(userId, outfitId);
 
   res.sendStatus(204);
 };

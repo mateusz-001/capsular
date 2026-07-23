@@ -140,11 +140,7 @@ export const remove = async (userId: string, outfitId: string) => {
   });
 };
 
-export const removeItem = async (
-  userId: string,
-  outfitId: string,
-  itemId: string,
-) => {
+export const removeItem = async (outfitId: string, itemId: string) => {
   const outfitItem = await prisma.outfitItem.findFirst({
     where: {
       outfitId,
