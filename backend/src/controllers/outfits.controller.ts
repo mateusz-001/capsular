@@ -82,12 +82,10 @@ export const deleteOutfitItem = async (req: Request, res: Response) => {
 export const updateOutfit = async (req: Request, res: Response) => {
   const { userId } = req.user;
   const outfitId = itemIdSchema.parse(req.params.outfitId);
-  const itemId = itemIdSchema.parse(req.params.itemId);
 
   const updatedOutfit = await update({
     userId,
     outfitId,
-    itemId,
     data: req.body,
   });
 

@@ -1,9 +1,19 @@
 import { z } from 'zod';
-import { OutfitSlot } from '../generated/prisma/enums.js';
+import {
+  Occasion,
+  OutfitSlot,
+  OutfitStatus,
+  Season,
+} from '../generated/prisma/enums.js';
 
 export const outfitSchema = z.object({
   name: z.string().max(100),
   description: z.string().max(255).optional(),
+  status: z.enum(OutfitStatus).optional(),
+  isFavorite: z.boolean().optional(),
+  occasions: z.array(z.enum(Occasion)).optional(),
+  seasons: z.array(z.enum(Season)).optional(),
+  warmthOverride: z.number().int().min(1).max(5).optional(),
 });
 
 export const outfitsQuerySchema = z.object({

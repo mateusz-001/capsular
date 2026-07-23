@@ -22,7 +22,6 @@ interface CreateOutfitItemPayload {
 interface UpdateOutfitPayload {
   userId: string;
   outfitId: string;
-  itemId: string;
   data: UpdateOutfitInput;
 }
 
@@ -31,6 +30,14 @@ interface UpdateOutfitItemPayload {
   itemId: string;
   data: UpdateOutfitItemInput;
 }
+
+const itemsInclude = {
+  items: {
+    include: {
+      wardrobeItem: true,
+    },
+  },
+};
 
 export const getAll = async (userId: string, query: OutfitsQuery) => {
   const where = {
@@ -55,9 +62,7 @@ export const getAll = async (userId: string, query: OutfitsQuery) => {
     orderBy,
     skip,
     take,
-    include: {
-      items: true,
-    },
+    include: itemsInclude,
   });
 
   return outfits;
@@ -69,9 +74,7 @@ export const getById = async (userId: string, outfitId: string) => {
       id: outfitId,
       userId,
     },
-    include: {
-      items: true,
-    },
+    include: itemsInclude,
   });
 
   if (!outfit) {
@@ -171,7 +174,9 @@ export const update = async ({
       userId,
       id: outfitId,
     },
-    data: updateData as Parameters<typeof prisma.outfit.updateMany>[0]['data'],
+    data: { ...updateData.data } as Parameters<
+      typeof prisma.outfit.updateMany
+    >[0]['data'],
   });
 
   if (result.count === 0) {
@@ -188,7 +193,6 @@ export const updateItem = async ({
 }: UpdateOutfitItemPayload) => {
   const updateData = removeUndefinedValuesFromPayload({ data });
 
-  console.log('Updating outfit item with data:', updateData);
   const result = await prisma.outfitItem.updateMany({
     where: {
       outfitId,
