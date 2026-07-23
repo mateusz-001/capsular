@@ -1,10 +1,13 @@
 import type { Request, Response } from 'express';
 import {
   create,
+  createItem,
   getAll,
   getById,
   remove,
+  removeItem,
   update,
+  updateItem,
 } from '../services/outfits.service.js';
 import { itemIdSchema } from '../schemas/universal.schema.js';
 import { outfitsQuerySchema } from '../schemas/outfits.schema.js';
@@ -16,6 +19,18 @@ export const createOutfit = async (req: Request, res: Response) => {
 
   res.status(201).json({
     message: 'Outfit created successfully',
+    data: result,
+  });
+};
+
+export const createOutfitItem = async (req: Request, res: Response) => {
+  const outfitId = itemIdSchema.parse(req.params.outfitId);
+  const data = req.body;
+
+  const result = await createItem({ outfitId, data });
+
+  res.status(201).json({
+    message: 'Outfit item created successfully',
     data: result,
   });
 };
@@ -55,14 +70,45 @@ export const deleteOutfit = async (req: Request, res: Response) => {
   res.sendStatus(204);
 };
 
+export const deleteOutfitItem = async (req: Request, res: Response) => {
+  const { userId } = req.user;
+  const outfitId = itemIdSchema.parse(req.params.outfitId);
+  const itemId = itemIdSchema.parse(req.params.itemId);
+
+  await removeItem(userId, outfitId, itemId);
+
+  res.sendStatus(204);
+};
+
 export const updateOutfit = async (req: Request, res: Response) => {
   const { userId } = req.user;
   const outfitId = itemIdSchema.parse(req.params.outfitId);
+  const itemId = itemIdSchema.parse(req.params.itemId);
 
-  const updatedOutfit = await update({ userId, outfitId, data: req.body });
+  const updatedOutfit = await update({
+    userId,
+    outfitId,
+    itemId,
+    data: req.body,
+  });
 
   res.status(200).json({
     message: 'Outfit updated successfully',
     data: updatedOutfit,
+  });
+};
+
+export const updateOutfitItem = async (req: Request, res: Response) => {
+  const outfitId = itemIdSchema.parse(req.params.outfitId);
+  const itemId = itemIdSchema.parse(req.params.itemId);
+  const updatedOutfitItem = await updateItem({
+    outfitId,
+    itemId,
+    data: req.body,
+  });
+
+  res.status(200).json({
+    message: 'Outfit item updated successfully',
+    data: updatedOutfitItem,
   });
 };

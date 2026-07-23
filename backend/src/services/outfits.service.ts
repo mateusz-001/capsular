@@ -1,8 +1,10 @@
 import { prisma } from '../lib/prisma.js';
 import type {
   CreateOutfitInput,
+  CreateOutfitItemInput,
   OutfitsQuery,
   UpdateOutfitInput,
+  UpdateOutfitItemInput,
 } from '../schemas/outfits.schema.js';
 import { removeUndefinedValuesFromPayload } from '../utils/removeUndefinedValuesFromPayload.js';
 import { NotFoundError } from '../errors/NotFoundError.js';
@@ -12,10 +14,22 @@ interface CreateOutfitPayload {
   data: CreateOutfitInput;
 }
 
+interface CreateOutfitItemPayload {
+  outfitId: string;
+  data: CreateOutfitItemInput;
+}
+
 interface UpdateOutfitPayload {
   userId: string;
   outfitId: string;
+  itemId: string;
   data: UpdateOutfitInput;
+}
+
+interface UpdateOutfitItemPayload {
+  outfitId: string;
+  itemId: string;
+  data: UpdateOutfitItemInput;
 }
 
 export const getAll = async (userId: string, query: OutfitsQuery) => {
@@ -41,6 +55,9 @@ export const getAll = async (userId: string, query: OutfitsQuery) => {
     orderBy,
     skip,
     take,
+    include: {
+      items: true,
+    },
   });
 
   return outfits;
@@ -51,6 +68,9 @@ export const getById = async (userId: string, outfitId: string) => {
     where: {
       id: outfitId,
       userId,
+    },
+    include: {
+      items: true,
     },
   });
 
@@ -74,6 +94,32 @@ export const create = async ({ userId, data }: CreateOutfitPayload) => {
   });
 };
 
+export const createItem = async ({
+  outfitId,
+  data,
+}: CreateOutfitItemPayload) => {
+  const outfit = await prisma.outfit.findUnique({
+    where: {
+      id: outfitId,
+    },
+  });
+
+  if (!outfit) {
+    throw new NotFoundError('Outfit not found');
+  }
+
+  const payload = removeUndefinedValuesFromPayload({
+    data,
+  });
+
+  return prisma.outfitItem.create({
+    data: {
+      outfitId,
+      ...payload.data,
+    } as unknown as Parameters<typeof prisma.outfitItem.create>[0]['data'],
+  });
+};
+
 export const remove = async (userId: string, outfitId: string) => {
   const outfit = await prisma.outfit.findFirst({
     where: {
@@ -90,6 +136,29 @@ export const remove = async (userId: string, outfitId: string) => {
     where: {
       id: outfitId,
       userId,
+    },
+  });
+};
+
+export const removeItem = async (
+  userId: string,
+  outfitId: string,
+  itemId: string,
+) => {
+  const outfitItem = await prisma.outfitItem.findFirst({
+    where: {
+      outfitId,
+      id: itemId,
+    },
+  });
+
+  if (!outfitItem) {
+    throw new NotFoundError('Outfit item not found');
+  }
+
+  await prisma.outfitItem.delete({
+    where: {
+      id: outfitItem.id,
     },
   });
 };
@@ -111,6 +180,31 @@ export const update = async ({
 
   if (result.count === 0) {
     throw new NotFoundError('Outfit not found');
+  }
+
+  return result;
+};
+
+export const updateItem = async ({
+  outfitId,
+  itemId,
+  data,
+}: UpdateOutfitItemPayload) => {
+  const updateData = removeUndefinedValuesFromPayload({ data });
+
+  console.log('Updating outfit item with data:', updateData);
+  const result = await prisma.outfitItem.updateMany({
+    where: {
+      outfitId,
+      id: itemId,
+    },
+    data: { ...updateData.data } as Parameters<
+      typeof prisma.outfitItem.updateMany
+    >[0]['data'],
+  });
+
+  if (result.count === 0) {
+    throw new NotFoundError('Outfit item not found');
   }
 
   return result;

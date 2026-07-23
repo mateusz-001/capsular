@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { OutfitSlot } from '../generated/prisma/enums.js';
 
 export const outfitSchema = z.object({
   name: z.string().max(100),
@@ -13,8 +14,17 @@ export const outfitsQuerySchema = z.object({
   order: z.enum(['asc', 'desc']).default('desc'),
 });
 
+export const createOutfitItemSchema = z.object({
+  slot: z.enum(OutfitSlot),
+  layerOrder: z.number().int().min(1).optional(),
+  wardrobeItemId: z.uuid(),
+});
+
 export const updateOutfitSchema = outfitSchema.partial();
+export const updateOutfitItemSchema = createOutfitItemSchema.partial();
 
 export type OutfitsQuery = z.infer<typeof outfitsQuerySchema>;
 export type CreateOutfitInput = z.infer<typeof outfitSchema>;
 export type UpdateOutfitInput = z.infer<typeof updateOutfitSchema>;
+export type CreateOutfitItemInput = z.infer<typeof createOutfitItemSchema>;
+export type UpdateOutfitItemInput = z.infer<typeof updateOutfitItemSchema>;
