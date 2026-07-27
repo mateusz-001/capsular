@@ -1,11 +1,13 @@
 import type { Request, Response } from 'express';
 import {
+  addTag,
   create,
   createItem,
   getAll,
   getById,
   remove,
   removeItem,
+  removeTagFromOutfit,
   update,
   updateItem,
 } from '../services/outfits.service.js';
@@ -33,6 +35,17 @@ export const createOutfitItem = async (req: Request, res: Response) => {
     message: 'Outfit item created successfully',
     data: result,
   });
+};
+
+export const addTagToOutfit = async (req: Request, res: Response) => {
+  const outfitId = itemIdSchema.parse(req.params.outfitId);
+  const tagId = itemIdSchema.parse(req.params.tagId);
+
+  const result = await addTag({ outfitId, tagId });
+
+  res
+    .status(201)
+    .json({ message: 'Tag added to outfit successfully', data: result });
 };
 
 export const getOutfits = async (req: Request, res: Response) => {
@@ -75,6 +88,15 @@ export const deleteOutfitItem = async (req: Request, res: Response) => {
   const outfitId = itemIdSchema.parse(req.params.outfitId);
 
   await removeItem(userId, outfitId);
+
+  res.sendStatus(204);
+};
+
+export const deleteTagFromOutfit = async (req: Request, res: Response) => {
+  const outfitId = itemIdSchema.parse(req.params.outfitId);
+  const tagId = itemIdSchema.parse(req.params.tagId);
+
+  await removeTagFromOutfit(outfitId, tagId);
 
   res.sendStatus(204);
 };

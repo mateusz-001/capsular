@@ -19,6 +19,11 @@ interface CreateOutfitItemPayload {
   data: CreateOutfitItemInput;
 }
 
+interface AddTagToOutfitPayload {
+  outfitId: string;
+  tagId: string;
+}
+
 interface UpdateOutfitPayload {
   userId: string;
   outfitId: string;
@@ -31,10 +36,15 @@ interface UpdateOutfitItemPayload {
   data: UpdateOutfitItemInput;
 }
 
-const itemsInclude = {
+const include = {
   items: {
     include: {
       wardrobeItem: true,
+    },
+  },
+  tags: {
+    include: {
+      tag: true,
     },
   },
 };
@@ -78,7 +88,7 @@ export const getAll = async (userId: string, query: OutfitsQuery) => {
     orderBy,
     skip,
     take,
-    include: itemsInclude,
+    include,
   });
 
   return outfits;
@@ -90,7 +100,7 @@ export const getById = async (userId: string, outfitId: string) => {
       id: outfitId,
       userId,
     },
-    include: itemsInclude,
+    include,
   });
 
   if (!outfit) {
@@ -139,6 +149,35 @@ export const createItem = async ({
   });
 };
 
+export const addTag = async ({ outfitId, tagId }: AddTagToOutfitPayload) => {
+  const outfit = await prisma.outfit.findUnique({
+    where: {
+      id: outfitId,
+    },
+  });
+
+  if (!outfit) {
+    throw new NotFoundError('Outfit not found');
+  }
+
+  const tag = await prisma.tag.findUnique({
+    where: {
+      id: tagId,
+    },
+  });
+
+  if (!tag) {
+    throw new NotFoundError('Tag not found');
+  }
+
+  return prisma.outfitTag.create({
+    data: {
+      outfitId,
+      tagId,
+    },
+  });
+};
+
 export const remove = async (userId: string, outfitId: string) => {
   const outfit = await prisma.outfit.findFirst({
     where: {
@@ -174,6 +213,28 @@ export const removeItem = async (outfitId: string, itemId: string) => {
   await prisma.outfitItem.delete({
     where: {
       id: outfitItem.id,
+    },
+  });
+};
+
+export const removeTagFromOutfit = async (outfitId: string, tagId: string) => {
+  const outfitTag = await prisma.outfitTag.findFirst({
+    where: {
+      outfitId,
+      tagId,
+    },
+  });
+
+  if (!outfitTag) {
+    throw new NotFoundError('Tag not found on outfit');
+  }
+
+  return prisma.outfitTag.delete({
+    where: {
+      outfitId_tagId: {
+        outfitId,
+        tagId,
+      },
     },
   });
 };

@@ -16,6 +16,8 @@ import {
   updateOutfitItem,
   createOutfitItem,
   deleteOutfitItem,
+  addTagToOutfit,
+  deleteTagFromOutfit,
 } from '../controllers/outfits.controller.js';
 
 const router = Router();
@@ -52,6 +54,17 @@ router.delete(
   '/:outfitId/items/:itemId',
   authMiddleware,
   asyncHandler(deleteOutfitItem),
+);
+
+router.post(
+  '/:outfitId/tags/:tagId',
+  authMiddleware,
+  asyncHandler(addTagToOutfit),
+);
+router.delete(
+  '/:outfitId/tags/:tagId',
+  authMiddleware,
+  asyncHandler(deleteTagFromOutfit),
 );
 
 export default router;

@@ -33,7 +33,7 @@ export const addTag = async (req: Request, res: Response) => {
 
   const tag = await createTag({ userId, name });
 
-  res.status(200).json({ message: 'Tag created successfully', data: tag });
+  res.status(201).json({ message: 'Tag created successfully', data: tag });
 };
 
 export const deleteTag = async (req: Request, res: Response) => {
