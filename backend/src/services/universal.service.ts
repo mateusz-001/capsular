@@ -1,4 +1,16 @@
+import { NotFoundError } from '../errors/NotFoundError.js';
 import { prisma } from '../lib/prisma.js';
+
+interface CreateTagPayload {
+  userId: string;
+  name: string;
+}
+
+interface EditTagPayload {
+  userId: string;
+  tagId: string;
+  name: string;
+}
 
 export const getColors = async () => {
   const colors = await prisma.color.findMany();
@@ -18,4 +30,74 @@ export const getMaterials = async () => {
   }
 
   return materials;
+};
+
+export const getTags = async () => {
+  const tags = await prisma.tag.findMany();
+
+  if (!tags || tags.length === 0) {
+    return [];
+  }
+
+  return tags;
+};
+
+export const createTag = async ({ name, userId }: CreateTagPayload) => {
+  const slug = name.toLowerCase().replace(/\s+/g, '-');
+
+  const tag = await prisma.tag.create({
+    data: {
+      userId,
+      name,
+      slug,
+    },
+  });
+
+  return tag;
+};
+
+export const removeTag = async (userId: string, tagId: string) => {
+  const tag = await prisma.tag.findFirst({
+    where: {
+      id: tagId,
+      userId,
+    },
+  });
+
+  if (!tag) {
+    throw new NotFoundError('Tag not found');
+  }
+
+  return prisma.tag.delete({
+    where: {
+      id: tagId,
+    },
+  });
+};
+
+export const editTag = async ({ userId, tagId, name }: EditTagPayload) => {
+  const tag = await prisma.tag.findFirst({
+    where: {
+      id: tagId,
+      userId,
+    },
+  });
+
+  if (!tag) {
+    throw new NotFoundError('Tag not found');
+  }
+
+  const slug = name.toLowerCase().replace(/\s+/g, '-');
+
+  const result = await prisma.tag.update({
+    where: {
+      id: tagId,
+    },
+    data: {
+      name,
+      slug,
+    },
+  });
+
+  return result;
 };
