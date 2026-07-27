@@ -20,6 +20,10 @@ export const outfitsQuerySchema = z.object({
   page: z.coerce.number().int().min(1).default(1),
   limit: z.coerce.number().int().min(1).max(100).default(10),
   search: z.string().max(100).optional(),
+  status: z.enum(OutfitStatus).optional(),
+  isFavorite: z.boolean().optional(),
+  season: z.enum(Season).optional(),
+  occasion: z.enum(Occasion).optional(),
   sortBy: z.enum(['createdAt', 'updatedAt', 'name']).default('createdAt'),
   order: z.enum(['asc', 'desc']).default('desc'),
 });

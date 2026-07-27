@@ -48,6 +48,22 @@ export const getAll = async (userId: string, query: OutfitsQuery) => {
         mode: 'insensitive' as const,
       },
     }),
+    ...(query.status && {
+      status: query.status,
+    }),
+    ...(query.isFavorite !== undefined && {
+      isFavorite: query.isFavorite,
+    }),
+    ...(query.season && {
+      seasons: {
+        has: query.season,
+      },
+    }),
+    ...(query.occasion && {
+      occasions: {
+        has: query.occasion,
+      },
+    }),
   };
 
   const orderBy = {
