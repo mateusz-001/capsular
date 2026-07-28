@@ -1822,6 +1822,8 @@ export const WardrobeItemScalarFieldEnum = {
   currencyCode: 'currencyCode',
   wearCountBeforeTracking: 'wearCountBeforeTracking',
   lastWornBeforeTracking: 'lastWornBeforeTracking',
+  wearCount: 'wearCount',
+  lastWorn: 'lastWorn',
   archivedAt: 'archivedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

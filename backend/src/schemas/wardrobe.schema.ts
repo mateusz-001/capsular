@@ -67,6 +67,12 @@ export const wardrobeItemSchema = z.object({
     .min(0, 'Wear count cannot be negative')
     .optional(),
   lastWornBeforeTracking: z.coerce.date().optional(),
+  wearCount: z
+    .number()
+    .int()
+    .min(0, 'Wear count cannot be negative')
+    .optional(),
+  lastWorn: z.coerce.date().optional(),
 });
 
 export const addColorSchema = z.object({
