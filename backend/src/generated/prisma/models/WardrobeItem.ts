@@ -30,12 +30,14 @@ export type WardrobeItemAvgAggregateOutputType = {
   warmthLevel: number | null
   purchasePrice: runtime.Decimal | null
   wearCountBeforeTracking: number | null
+  wearCount: number | null
 }
 
 export type WardrobeItemSumAggregateOutputType = {
   warmthLevel: number | null
   purchasePrice: runtime.Decimal | null
   wearCountBeforeTracking: number | null
+  wearCount: number | null
 }
 
 export type WardrobeItemMinAggregateOutputType = {
@@ -60,6 +62,8 @@ export type WardrobeItemMinAggregateOutputType = {
   currencyCode: string | null
   wearCountBeforeTracking: number | null
   lastWornBeforeTracking: Date | null
+  wearCount: number | null
+  lastWorn: Date | null
   archivedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -87,6 +91,8 @@ export type WardrobeItemMaxAggregateOutputType = {
   currencyCode: string | null
   wearCountBeforeTracking: number | null
   lastWornBeforeTracking: Date | null
+  wearCount: number | null
+  lastWorn: Date | null
   archivedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -116,6 +122,8 @@ export type WardrobeItemCountAggregateOutputType = {
   currencyCode: number
   wearCountBeforeTracking: number
   lastWornBeforeTracking: number
+  wearCount: number
+  lastWorn: number
   archivedAt: number
   createdAt: number
   updatedAt: number
@@ -127,12 +135,14 @@ export type WardrobeItemAvgAggregateInputType = {
   warmthLevel?: true
   purchasePrice?: true
   wearCountBeforeTracking?: true
+  wearCount?: true
 }
 
 export type WardrobeItemSumAggregateInputType = {
   warmthLevel?: true
   purchasePrice?: true
   wearCountBeforeTracking?: true
+  wearCount?: true
 }
 
 export type WardrobeItemMinAggregateInputType = {
@@ -157,6 +167,8 @@ export type WardrobeItemMinAggregateInputType = {
   currencyCode?: true
   wearCountBeforeTracking?: true
   lastWornBeforeTracking?: true
+  wearCount?: true
+  lastWorn?: true
   archivedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -184,6 +196,8 @@ export type WardrobeItemMaxAggregateInputType = {
   currencyCode?: true
   wearCountBeforeTracking?: true
   lastWornBeforeTracking?: true
+  wearCount?: true
+  lastWorn?: true
   archivedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -213,6 +227,8 @@ export type WardrobeItemCountAggregateInputType = {
   currencyCode?: true
   wearCountBeforeTracking?: true
   lastWornBeforeTracking?: true
+  wearCount?: true
+  lastWorn?: true
   archivedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -329,6 +345,8 @@ export type WardrobeItemGroupByOutputType = {
   currencyCode: string | null
   wearCountBeforeTracking: number
   lastWornBeforeTracking: Date | null
+  wearCount: number
+  lastWorn: Date | null
   archivedAt: Date | null
   createdAt: Date
   updatedAt: Date
@@ -381,6 +399,8 @@ export type WardrobeItemWhereInput = {
   currencyCode?: Prisma.StringNullableFilter<"WardrobeItem"> | string | null
   wearCountBeforeTracking?: Prisma.IntFilter<"WardrobeItem"> | number
   lastWornBeforeTracking?: Prisma.DateTimeNullableFilter<"WardrobeItem"> | Date | string | null
+  wearCount?: Prisma.IntFilter<"WardrobeItem"> | number
+  lastWorn?: Prisma.DateTimeNullableFilter<"WardrobeItem"> | Date | string | null
   archivedAt?: Prisma.DateTimeNullableFilter<"WardrobeItem"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string
@@ -416,6 +436,8 @@ export type WardrobeItemOrderByWithRelationInput = {
   currencyCode?: Prisma.SortOrderInput | Prisma.SortOrder
   wearCountBeforeTracking?: Prisma.SortOrder
   lastWornBeforeTracking?: Prisma.SortOrderInput | Prisma.SortOrder
+  wearCount?: Prisma.SortOrder
+  lastWorn?: Prisma.SortOrderInput | Prisma.SortOrder
   archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -454,6 +476,8 @@ export type WardrobeItemWhereUniqueInput = Prisma.AtLeast<{
   currencyCode?: Prisma.StringNullableFilter<"WardrobeItem"> | string | null
   wearCountBeforeTracking?: Prisma.IntFilter<"WardrobeItem"> | number
   lastWornBeforeTracking?: Prisma.DateTimeNullableFilter<"WardrobeItem"> | Date | string | null
+  wearCount?: Prisma.IntFilter<"WardrobeItem"> | number
+  lastWorn?: Prisma.DateTimeNullableFilter<"WardrobeItem"> | Date | string | null
   archivedAt?: Prisma.DateTimeNullableFilter<"WardrobeItem"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string
@@ -489,6 +513,8 @@ export type WardrobeItemOrderByWithAggregationInput = {
   currencyCode?: Prisma.SortOrderInput | Prisma.SortOrder
   wearCountBeforeTracking?: Prisma.SortOrder
   lastWornBeforeTracking?: Prisma.SortOrderInput | Prisma.SortOrder
+  wearCount?: Prisma.SortOrder
+  lastWorn?: Prisma.SortOrderInput | Prisma.SortOrder
   archivedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -526,6 +552,8 @@ export type WardrobeItemScalarWhereWithAggregatesInput = {
   currencyCode?: Prisma.StringNullableWithAggregatesFilter<"WardrobeItem"> | string | null
   wearCountBeforeTracking?: Prisma.IntWithAggregatesFilter<"WardrobeItem"> | number
   lastWornBeforeTracking?: Prisma.DateTimeNullableWithAggregatesFilter<"WardrobeItem"> | Date | string | null
+  wearCount?: Prisma.IntWithAggregatesFilter<"WardrobeItem"> | number
+  lastWorn?: Prisma.DateTimeNullableWithAggregatesFilter<"WardrobeItem"> | Date | string | null
   archivedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"WardrobeItem"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"WardrobeItem"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"WardrobeItem"> | Date | string
@@ -554,6 +582,8 @@ export type WardrobeItemCreateInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -589,6 +619,8 @@ export type WardrobeItemUncheckedCreateInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -622,6 +654,8 @@ export type WardrobeItemUpdateInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -657,6 +691,8 @@ export type WardrobeItemUncheckedUpdateInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -691,6 +727,8 @@ export type WardrobeItemCreateManyInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -719,6 +757,8 @@ export type WardrobeItemUpdateManyMutationInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -748,6 +788,8 @@ export type WardrobeItemUncheckedUpdateManyInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -795,6 +837,8 @@ export type WardrobeItemCountOrderByAggregateInput = {
   currencyCode?: Prisma.SortOrder
   wearCountBeforeTracking?: Prisma.SortOrder
   lastWornBeforeTracking?: Prisma.SortOrder
+  wearCount?: Prisma.SortOrder
+  lastWorn?: Prisma.SortOrder
   archivedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -804,6 +848,7 @@ export type WardrobeItemAvgOrderByAggregateInput = {
   warmthLevel?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   wearCountBeforeTracking?: Prisma.SortOrder
+  wearCount?: Prisma.SortOrder
 }
 
 export type WardrobeItemMaxOrderByAggregateInput = {
@@ -828,6 +873,8 @@ export type WardrobeItemMaxOrderByAggregateInput = {
   currencyCode?: Prisma.SortOrder
   wearCountBeforeTracking?: Prisma.SortOrder
   lastWornBeforeTracking?: Prisma.SortOrder
+  wearCount?: Prisma.SortOrder
+  lastWorn?: Prisma.SortOrder
   archivedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -855,6 +902,8 @@ export type WardrobeItemMinOrderByAggregateInput = {
   currencyCode?: Prisma.SortOrder
   wearCountBeforeTracking?: Prisma.SortOrder
   lastWornBeforeTracking?: Prisma.SortOrder
+  wearCount?: Prisma.SortOrder
+  lastWorn?: Prisma.SortOrder
   archivedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -864,6 +913,7 @@ export type WardrobeItemSumOrderByAggregateInput = {
   warmthLevel?: Prisma.SortOrder
   purchasePrice?: Prisma.SortOrder
   wearCountBeforeTracking?: Prisma.SortOrder
+  wearCount?: Prisma.SortOrder
 }
 
 export type WardrobeItemScalarRelationFilter = {
@@ -1040,6 +1090,8 @@ export type WardrobeItemCreateWithoutUserInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1073,6 +1125,8 @@ export type WardrobeItemUncheckedCreateWithoutUserInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1136,6 +1190,8 @@ export type WardrobeItemScalarWhereInput = {
   currencyCode?: Prisma.StringNullableFilter<"WardrobeItem"> | string | null
   wearCountBeforeTracking?: Prisma.IntFilter<"WardrobeItem"> | number
   lastWornBeforeTracking?: Prisma.DateTimeNullableFilter<"WardrobeItem"> | Date | string | null
+  wearCount?: Prisma.IntFilter<"WardrobeItem"> | number
+  lastWorn?: Prisma.DateTimeNullableFilter<"WardrobeItem"> | Date | string | null
   archivedAt?: Prisma.DateTimeNullableFilter<"WardrobeItem"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"WardrobeItem"> | Date | string
@@ -1164,6 +1220,8 @@ export type WardrobeItemCreateWithoutImagesInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1198,6 +1256,8 @@ export type WardrobeItemUncheckedCreateWithoutImagesInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1246,6 +1306,8 @@ export type WardrobeItemUpdateWithoutImagesInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1280,6 +1342,8 @@ export type WardrobeItemUncheckedUpdateWithoutImagesInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1312,6 +1376,8 @@ export type WardrobeItemCreateWithoutColorsInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1346,6 +1412,8 @@ export type WardrobeItemUncheckedCreateWithoutColorsInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1394,6 +1462,8 @@ export type WardrobeItemUpdateWithoutColorsInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1428,6 +1498,8 @@ export type WardrobeItemUncheckedUpdateWithoutColorsInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1460,6 +1532,8 @@ export type WardrobeItemCreateWithoutMaterialsInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1494,6 +1568,8 @@ export type WardrobeItemUncheckedCreateWithoutMaterialsInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1542,6 +1618,8 @@ export type WardrobeItemUpdateWithoutMaterialsInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1576,6 +1654,8 @@ export type WardrobeItemUncheckedUpdateWithoutMaterialsInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1608,6 +1688,8 @@ export type WardrobeItemCreateWithoutOutfitLinksInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1642,6 +1724,8 @@ export type WardrobeItemUncheckedCreateWithoutOutfitLinksInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1690,6 +1774,8 @@ export type WardrobeItemUpdateWithoutOutfitLinksInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1724,6 +1810,8 @@ export type WardrobeItemUncheckedUpdateWithoutOutfitLinksInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1756,6 +1844,8 @@ export type WardrobeItemCreateWithoutWearEventItemsInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1790,6 +1880,8 @@ export type WardrobeItemUncheckedCreateWithoutWearEventItemsInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1838,6 +1930,8 @@ export type WardrobeItemUpdateWithoutWearEventItemsInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1872,6 +1966,8 @@ export type WardrobeItemUncheckedUpdateWithoutWearEventItemsInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1904,6 +2000,8 @@ export type WardrobeItemCreateManyUserInput = {
   currencyCode?: string | null
   wearCountBeforeTracking?: number
   lastWornBeforeTracking?: Date | string | null
+  wearCount?: number
+  lastWorn?: Date | string | null
   archivedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1932,6 +2030,8 @@ export type WardrobeItemUpdateWithoutUserInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1965,6 +2065,8 @@ export type WardrobeItemUncheckedUpdateWithoutUserInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1998,6 +2100,8 @@ export type WardrobeItemUncheckedUpdateManyWithoutUserInput = {
   currencyCode?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   wearCountBeforeTracking?: Prisma.IntFieldUpdateOperationsInput | number
   lastWornBeforeTracking?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  wearCount?: Prisma.IntFieldUpdateOperationsInput | number
+  lastWorn?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   archivedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -2094,6 +2198,8 @@ export type WardrobeItemSelect<ExtArgs extends runtime.Types.Extensions.Internal
   currencyCode?: boolean
   wearCountBeforeTracking?: boolean
   lastWornBeforeTracking?: boolean
+  wearCount?: boolean
+  lastWorn?: boolean
   archivedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -2130,6 +2236,8 @@ export type WardrobeItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   currencyCode?: boolean
   wearCountBeforeTracking?: boolean
   lastWornBeforeTracking?: boolean
+  wearCount?: boolean
+  lastWorn?: boolean
   archivedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -2160,6 +2268,8 @@ export type WardrobeItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   currencyCode?: boolean
   wearCountBeforeTracking?: boolean
   lastWornBeforeTracking?: boolean
+  wearCount?: boolean
+  lastWorn?: boolean
   archivedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -2190,12 +2300,14 @@ export type WardrobeItemSelectScalar = {
   currencyCode?: boolean
   wearCountBeforeTracking?: boolean
   lastWornBeforeTracking?: boolean
+  wearCount?: boolean
+  lastWorn?: boolean
   archivedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type WardrobeItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "description" | "category" | "subcategory" | "brand" | "size" | "availability" | "availabilityChangedAt" | "availableFrom" | "unavailableReason" | "isFavorite" | "seasons" | "occasions" | "warmthLevel" | "waterResistance" | "isWindResistant" | "purchaseDate" | "purchasePrice" | "currencyCode" | "wearCountBeforeTracking" | "lastWornBeforeTracking" | "archivedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["wardrobeItem"]>
+export type WardrobeItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "name" | "description" | "category" | "subcategory" | "brand" | "size" | "availability" | "availabilityChangedAt" | "availableFrom" | "unavailableReason" | "isFavorite" | "seasons" | "occasions" | "warmthLevel" | "waterResistance" | "isWindResistant" | "purchaseDate" | "purchasePrice" | "currencyCode" | "wearCountBeforeTracking" | "lastWornBeforeTracking" | "wearCount" | "lastWorn" | "archivedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["wardrobeItem"]>
 export type WardrobeItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   images?: boolean | Prisma.WardrobeItem$imagesArgs<ExtArgs>
@@ -2246,6 +2358,8 @@ export type $WardrobeItemPayload<ExtArgs extends runtime.Types.Extensions.Intern
     currencyCode: string | null
     wearCountBeforeTracking: number
     lastWornBeforeTracking: Date | null
+    wearCount: number
+    lastWorn: Date | null
     archivedAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -2701,6 +2815,8 @@ export interface WardrobeItemFieldRefs {
   readonly currencyCode: Prisma.FieldRef<"WardrobeItem", 'String'>
   readonly wearCountBeforeTracking: Prisma.FieldRef<"WardrobeItem", 'Int'>
   readonly lastWornBeforeTracking: Prisma.FieldRef<"WardrobeItem", 'DateTime'>
+  readonly wearCount: Prisma.FieldRef<"WardrobeItem", 'Int'>
+  readonly lastWorn: Prisma.FieldRef<"WardrobeItem", 'DateTime'>
   readonly archivedAt: Prisma.FieldRef<"WardrobeItem", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"WardrobeItem", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"WardrobeItem", 'DateTime'>

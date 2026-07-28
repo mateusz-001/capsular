@@ -251,6 +251,8 @@ model WardrobeItem {
   currencyCode            String?            @map("currency_code") @db.Char(3)
   wearCountBeforeTracking Int                @default(0) @map("wear_count_before_tracking")
   lastWornBeforeTracking  DateTime?          @map("last_worn_before_tracking") @db.Timestamptz(3)
+  wearCount               Int                @default(0) @map("wear_count")
+  lastWorn                DateTime?          @map("last_worn") @db.Timestamptz(3)
   archivedAt              DateTime?          @map("archived_at") @db.Timestamptz(3)
   createdAt               DateTime           @default(now()) @map("created_at") @db.Timestamptz(3)
   updatedAt               DateTime           @updatedAt @map("updated_at") @db.Timestamptz(3)
