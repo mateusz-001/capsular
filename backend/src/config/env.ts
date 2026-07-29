@@ -5,6 +5,8 @@ const envSchema = z.object({
   PORT: z.string().transform((val) => parseInt(val, 10)),
   DATABASE_URL: z.string(),
   JWT_SECRET: z.string(),
+  JWT_ACCESS_EXPIRES_IN: z.coerce.number(),
+  JWT_REFRESH_EXPIRES_IN: z.coerce.number(),
   CLOUDINARY_CLOUD_NAME: z.string(),
   CLOUDINARY_API_KEY: z.string(),
   CLOUDINARY_API_SECRET: z.string(),
