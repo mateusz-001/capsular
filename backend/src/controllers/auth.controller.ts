@@ -1,9 +1,14 @@
 import type { Request, Response } from 'express';
 
-import { loginSchema, registerSchema } from '../schemas/auth.schema.js';
+import {
+  loginSchema,
+  refreshTokenSchema,
+  registerSchema,
+} from '../schemas/auth.schema.js';
 import {
   getCurrentUser,
   loginUser,
+  refreshAccessToken,
   registerUser,
 } from '../services/auth.service.js';
 
@@ -20,13 +25,22 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 export const login = async (req: Request, res: Response): Promise<void> => {
   const user = loginSchema.parse(req.body);
 
-  const { token, email, id } = await loginUser(user);
+  const { accessToken, refreshToken, email, id } = await loginUser(user);
 
   res.status(201).json({
-    token,
+    accessToken,
+    refreshToken,
     email,
     id,
   });
+};
+
+export const refresh = async (req: Request, res: Response) => {
+  const { refreshToken } = refreshTokenSchema.parse(req.body);
+
+  const data = await refreshAccessToken(refreshToken);
+
+  res.status(200).json(data);
 };
 
 export const me = async (req: Request, res: Response): Promise<void> => {
