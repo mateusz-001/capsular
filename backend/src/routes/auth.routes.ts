@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import {
+  getActiveSessions,
   login,
   me,
   refresh,
@@ -11,8 +12,9 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 const router = Router();
 
 router.post('/register', asyncHandler(register));
-router.post('/login', asyncHandler(login));
 router.get('/me', authMiddleware, asyncHandler(me));
+router.get('/sessions', authMiddleware, asyncHandler(getActiveSessions));
+router.post('/login', asyncHandler(login));
 router.post('/refresh', asyncHandler(refresh));
 
 export default router;

@@ -135,3 +135,15 @@ export const getCurrentUser = async (userId: string) => {
     updatedAt: user.updatedAt,
   };
 };
+
+export const getSessions = async (userId: string) => {
+  const sessions = await prisma.authSession.findMany({
+    where: { userId },
+  });
+
+  if (!sessions) {
+    return [];
+  }
+
+  return sessions;
+};

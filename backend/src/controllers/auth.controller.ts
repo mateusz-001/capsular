@@ -7,6 +7,7 @@ import {
 } from '../schemas/auth.schema.js';
 import {
   getCurrentUser,
+  getSessions,
   loginUser,
   refreshAccessToken,
   registerUser,
@@ -29,12 +30,14 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     await loginUser(user, req.get('User-Agent') || '', req.ip || 'Unknown');
 
   res.status(201).json({
-    accessToken,
-    refreshToken,
-    email,
-    id,
-    userAgent,
-    ipAddress,
+    data: {
+      accessToken,
+      refreshToken,
+      email,
+      id,
+      userAgent,
+      ipAddress,
+    },
   });
 };
 
@@ -51,5 +54,18 @@ export const me = async (req: Request, res: Response): Promise<void> => {
 
   res.status(201).json({
     ...me,
+  });
+};
+
+export const getActiveSessions = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const sessions = await getSessions(req.user.userId);
+
+  res.status(200).json({
+    data: {
+      sessions,
+    },
   });
 };
