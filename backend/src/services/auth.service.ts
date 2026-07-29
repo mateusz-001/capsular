@@ -147,3 +147,14 @@ export const getSessions = async (userId: string) => {
 
   return sessions;
 };
+
+export const logout = async (userId: string, refreshToken: string) => {
+  const tokenHash = hashRefreshToken(refreshToken);
+
+  await prisma.authSession.deleteMany({
+    where: {
+      tokenHash,
+      userId,
+    },
+  });
+};

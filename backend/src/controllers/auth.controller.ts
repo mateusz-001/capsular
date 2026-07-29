@@ -9,6 +9,7 @@ import {
   getCurrentUser,
   getSessions,
   loginUser,
+  logout,
   refreshAccessToken,
   registerUser,
 } from '../services/auth.service.js';
@@ -67,5 +68,18 @@ export const getActiveSessions = async (
     data: {
       sessions,
     },
+  });
+};
+
+export const logoutUser = async (
+  req: Request,
+  res: Response,
+): Promise<void> => {
+  const { refreshToken } = refreshTokenSchema.parse(req.body);
+
+  await logout(req.user.userId, refreshToken);
+
+  res.status(200).json({
+    message: 'Logged out successfully',
   });
 };
