@@ -1,5 +1,15 @@
 import { NotFoundError } from '../errors/NotFoundError.js';
 import { prisma } from '../lib/prisma.js';
+import {
+  UnitSystem,
+  BodyType,
+  StylePreference,
+  Occasion,
+  ShoppingFrequency,
+  PriceSensitivity,
+  WardrobeGoal,
+  CapsuleStatus,
+} from '../generated/prisma/enums.js';
 
 interface CreateTagPayload {
   userId: string;
@@ -30,6 +40,19 @@ export const getMaterials = async () => {
   }
 
   return materials;
+};
+
+export const getProfileOptions = async () => {
+  return {
+    unitSystems: Object.values(UnitSystem),
+    bodyTypes: Object.values(BodyType),
+    stylePreferences: Object.values(StylePreference),
+    occasions: Object.values(Occasion),
+    shoppingFrequencies: Object.values(ShoppingFrequency),
+    priceSensitivities: Object.values(PriceSensitivity),
+    wardrobeGoals: Object.values(WardrobeGoal),
+    capsuleStatuses: Object.values(CapsuleStatus),
+  };
 };
 
 export const getTags = async () => {
