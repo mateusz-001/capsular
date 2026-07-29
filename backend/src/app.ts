@@ -11,6 +11,7 @@ import universalRouter from './routes/universal.routes.js';
 import outfitRouter from './routes/outfits.routes.js';
 import wearEventsRouter from './routes/wearEvents.routes.js';
 import calendarRouter from './routes/calendar.routes.js';
+import profileRouter from './routes/profile.routes.js';
 
 import errorMiddleware from './middlewares/error.middleware.js';
 import requestLoggerMiddleware from './middlewares/requestLogger.middleware.js';
@@ -31,6 +32,7 @@ app.use('/api/universal', universalRouter);
 app.use('/api/outfits', outfitRouter);
 app.use('/api/wear-events', wearEventsRouter);
 app.use('/api/calendar', calendarRouter);
+app.use('/api/profile', profileRouter);
 
 app.use(errorMiddleware);
 
