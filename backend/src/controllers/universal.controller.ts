@@ -4,6 +4,7 @@ import {
   editTag,
   getColors,
   getMaterials,
+  getProfileOptions,
   getTags,
   removeTag,
 } from '../services/universal.service.js';
@@ -25,6 +26,15 @@ export const getAvailableTags = async (_req: Request, res: Response) => {
   const tags = await getTags();
 
   res.status(200).json({ data: tags });
+};
+
+export const getAvailableProfileOptions = async (
+  _req: Request,
+  res: Response,
+) => {
+  const profileOptions = await getProfileOptions();
+
+  res.status(200).json({ data: profileOptions });
 };
 
 export const addTag = async (req: Request, res: Response) => {
