@@ -25,13 +25,16 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 export const login = async (req: Request, res: Response): Promise<void> => {
   const user = loginSchema.parse(req.body);
 
-  const { accessToken, refreshToken, email, id } = await loginUser(user);
+  const { accessToken, refreshToken, email, id, userAgent, ipAddress } =
+    await loginUser(user, req.get('User-Agent') || '', req.ip || 'Unknown');
 
   res.status(201).json({
     accessToken,
     refreshToken,
     email,
     id,
+    userAgent,
+    ipAddress,
   });
 };
 

@@ -37,7 +37,11 @@ export const registerUser = async ({ email, password }: RegisterInput) => {
   return newUser;
 };
 
-export const loginUser = async ({ email, password }: LoginInput) => {
+export const loginUser = async (
+  { email, password }: LoginInput,
+  userAgent: string,
+  ipAddress: string,
+) => {
   const existingUser = await prisma.user.findUnique({ where: { email } });
 
   if (!existingUser) {
@@ -60,6 +64,8 @@ export const loginUser = async ({ email, password }: LoginInput) => {
       userId: existingUser.id,
       tokenHash,
       expiresAt,
+      userAgent,
+      ipAddress,
     },
   });
 
@@ -68,6 +74,8 @@ export const loginUser = async ({ email, password }: LoginInput) => {
     refreshToken,
     email: existingUser.email,
     id: existingUser.id,
+    userAgent,
+    ipAddress,
   };
 };
 
