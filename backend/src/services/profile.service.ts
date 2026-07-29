@@ -39,6 +39,25 @@ export const getProfile = async (userId: string) => {
   return profile;
 };
 
+export const getCompletion = async (userId: string) => {
+  const profile = await prisma.userProfile.findUnique({
+    where: {
+      userId,
+    },
+  });
+
+  const totalFields = Object.keys(profile ?? {}).length;
+  const filledFields = Object.values(profile ?? {}).filter(Boolean).length;
+
+  const completionRate = (
+    totalFields > 0 ? (filledFields / totalFields) * 100 : 0
+  ).toFixed(0);
+
+  return {
+    completionRate,
+  };
+};
+
 export const update = async ({ userId, data }: ProfilePayload) => {
   const payload = removeUndefinedValuesFromPayload({
     userId,

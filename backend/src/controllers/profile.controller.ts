@@ -1,5 +1,10 @@
 import type { Request, Response } from 'express';
-import { create, getProfile, update } from '../services/profile.service.js';
+import {
+  create,
+  getCompletion,
+  getProfile,
+  update,
+} from '../services/profile.service.js';
 
 export const createProfile = async (req: Request, res: Response) => {
   const { userId } = req.user;
@@ -18,6 +23,14 @@ export const getProfileInfo = async (req: Request, res: Response) => {
   const profile = await getProfile(userId);
 
   res.status(200).json({ data: profile });
+};
+
+export const getProfileCompletionRate = async (req: Request, res: Response) => {
+  const { userId } = req.user;
+
+  const completion = await getCompletion(userId);
+
+  res.status(200).json({ data: completion });
 };
 
 export const updateProfileInfo = async (req: Request, res: Response) => {

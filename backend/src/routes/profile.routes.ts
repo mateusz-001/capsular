@@ -4,6 +4,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { authMiddleware } from '../middlewares/auth.middleware.js';
 import {
   createProfile,
+  getProfileCompletionRate,
   getProfileInfo,
   updateProfileInfo,
 } from '../controllers/profile.controller.js';
@@ -13,6 +14,11 @@ import { profileSchema } from '../schemas/profile.schema.js';
 const router = Router();
 
 router.get('/', authMiddleware, asyncHandler(getProfileInfo));
+router.get(
+  '/completion',
+  authMiddleware,
+  asyncHandler(getProfileCompletionRate),
+);
 router.post(
   '/',
   authMiddleware,
